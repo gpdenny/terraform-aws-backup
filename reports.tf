@@ -19,5 +19,5 @@ resource "aws_backup_report_plan" "ab_report" {
     number_of_frameworks = length(each.value.framework_arns)
   }
 
-  tags = merge(var.tags, { Name = each.value.name })
+  tags = var.tags
 }
