@@ -1,5 +1,5 @@
 resource "aws_backup_report_plan" "ab_report" {
-  for_each = var.backup_reports
+  for_each = var.reports
 
   name        = each.value.name
   description = each.value.description
