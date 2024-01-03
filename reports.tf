@@ -1,5 +1,5 @@
 resource "aws_backup_report_plan" "ab_report" {
-  for_each = var.reports
+  for_each = { for report in var.reports : report.name => report }
 
   name        = each.value.name
   description = each.value.description
@@ -20,5 +20,4 @@ resource "aws_backup_report_plan" "ab_report" {
   }
 
   tags = merge(var.tags, { Name = each.value.name })
-
 }
