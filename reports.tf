@@ -16,7 +16,7 @@ resource "aws_backup_report_plan" "ab_report" {
     organization_units   = each.value.organization_units
     regions              = each.value.regions
     framework_arns       = each.value.framework_arns
-    number_of_frameworks = each.value.framework_arns ? length(each.value.framework_arns) : 0
+    number_of_frameworks = length(each.value.framework_arns)
   }
 
   tags = merge(var.tags, { Name = each.value.name })

@@ -222,7 +222,7 @@ variable "reports" {
     accounts           = optional(list(string), null)
     organization_units = optional(list(string), null)
     regions            = optional(list(string), null)
-    framework_arns     = optional(list(string), null)
+    framework_arns     = optional(list(string), [])
   }))
   default = []
 }
