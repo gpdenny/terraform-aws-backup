@@ -210,7 +210,7 @@ variable "iam_role_name" {
 #
 # AWS Backup Report Plan
 #
-variable "backup_reports" {
+variable "reports" {
   description = "The default cache behavior for this distribution."
   type = list(object({
     name               = string
