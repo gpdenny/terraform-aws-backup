@@ -66,9 +66,33 @@ resource "aws_backup_selection" "ab_selections" {
   dynamic "condition" {
     for_each = try(each.value.conditions, {})
     content {
-      string_equals {
-        key   = condition.key
-        value = condition.value
+      dynamic "string_equals" {
+        for_each = try(condition.value.string_equals, [])
+        content {
+          key   = string_equals.value.key
+          value = string_equals.value.value
+        }
+      }
+      dynamic "string_not_equals" {
+        for_each = try(condition.value.string_not_equals, [])
+        content {
+          key   = string_not_equals.value.key
+          value = string_not_equals.value.value
+        }
+      }
+      dynamic "string_like" {
+        for_each = try(condition.value.string_like, [])
+        content {
+          key   = string_like.value.key
+          value = string_like.value.value
+        }
+      }
+      dynamic "string_not_like" {
+        for_each = try(condition.value.string_not_like, [])
+        content {
+          key   = string_not_like.value.key
+          value = string_not_like.value.value
+        }
       }
     }
   }
