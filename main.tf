@@ -133,12 +133,12 @@ locals {
   lifecycle_validations = alltrue([
     for rule in local.rules : (
       length(try(rule.lifecycle, {})) == 0 ? true :
-      try(rule.lifecycle.cold_storage_after, 0) <= try(rule.lifecycle.delete_after, 90)
+      coalesce(rule.lifecycle.cold_storage_after, 0) <= coalesce(rule.lifecycle.delete_after, 90)
     ) &&
     alltrue([
       for copy_action in try(rule.copy_actions, []) : (
         length(try(copy_action.lifecycle, {})) == 0 ? true :
-        try(copy_action.lifecycle.cold_storage_after, 0) <= try(copy_action.lifecycle.delete_after, 90)
+        coalesce(copy_action.lifecycle.cold_storage_after, 0) <= coalesce(copy_action.lifecycle.delete_after, 90)
       )
     ])
   ])
