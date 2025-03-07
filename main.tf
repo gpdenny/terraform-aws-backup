@@ -48,8 +48,8 @@ resource "aws_backup_plan" "ab_plan" {
       dynamic "lifecycle" {
         for_each = length(try(rule.value.lifecycle, {})) == 0 ? [] : [rule.value.lifecycle]
         content {
-          cold_storage_after = try(lifecycle.value.cold_storage_after, 0)
-          delete_after       = try(lifecycle.value.delete_after, 90)
+          cold_storage_after = coalesce(lifecycle.value.cold_storage_after, 0)
+          delete_after       = coalesce(lifecycle.value.delete_after, 90)
         }
       }
 
@@ -63,8 +63,8 @@ resource "aws_backup_plan" "ab_plan" {
           dynamic "lifecycle" {
             for_each = length(try(copy_action.value.lifecycle, {})) == 0 ? [] : [copy_action.value.lifecycle]
             content {
-              cold_storage_after = try(lifecycle.value.cold_storage_after, 0)
-              delete_after       = try(lifecycle.value.delete_after, 90)
+              cold_storage_after = coalesce(lifecycle.value.cold_storage_after, 0)
+              delete_after       = coalesce(lifecycle.value.delete_after, 90)
             }
           }
         }
